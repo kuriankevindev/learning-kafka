@@ -16,3 +16,8 @@
 	kafka-consumer-groups --bootstrap-server broker:9092 --describe --group my-app
 ---Describe Consumers of Consumer Group
 	kafka-consumer-groups --bootstrap-server broker:9092 --describe --group my-app --members
+
+--Start Consumer Group
+    kafka-console-consumer --bootstrap-server broker:9092 --topic first_topic --group my-app
+--Add New Topic Partitions
+    kafka-topics --alter --bootstrap-server broker:9092 --topic first_topic --partitions 5

@@ -7,11 +7,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
-public class ProducerWithKeys {
+public class ProducerPartitionSpecific {
 
     public static void main(String[] args) {
 
-        Logger logger = LoggerFactory.getLogger(ProducerWithKeys.class);
+        Logger logger = LoggerFactory.getLogger(ProducerPartitionSpecific.class);
 
         String key = "";
         String value = "";
@@ -25,13 +25,19 @@ public class ProducerWithKeys {
         // create the producer
         KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
 
-        for (int i = 0; i < 100; i++) {
-            key = "id_" + i/10;
+        int n;
+        for (int i = 1; i <= 10; i++) {
+
+            n = i % 10;
+            n /= 3;
+
+            key = "id_" + n;
             value = "hello world " + i;
             logger.info("Key: " + key + ", Value: " + value);
 
             // create a producer record
-            ProducerRecord<String, String> record = new ProducerRecord<>("first_topic", key, value);
+            // ProducerRecord<String, String> record = new ProducerRecord<>("first_topic", key, value);
+            ProducerRecord<String, String> record = new ProducerRecord<>("first_topic", 4, key, value);
 
             // send data
             producer.send(record, new Callback() {
